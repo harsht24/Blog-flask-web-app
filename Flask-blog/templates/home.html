@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-  {% if title %}
-    <title>Flask Blog-{{title}}</title>
-    {% else %}
-    <title>Flask Blog</title>
-    {%endif%}
-</head>
-<body>
-    {% for i in posts %}
-    <h1>{{ i.title }}</h1>
-    <p>By <strong>{{ i.author }}</strong> on <small>{{i.date_posted}}</small></p>
-    <p>{{ i.content }}</p>
-    {% endfor %}
-</body>
-</html>
+
+{% extends "layout.html"  %}
+    {% block content %}
+        {% for i in posts %}
+        <article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ i.author }}</a>
+      <small class="text-muted">{{ i.date_posted }}</small>
+    </div>
+    <h2><a class="article-title" href="#">{{ i.title }}</a></h2>
+    <p class="article-content">{{ i.content }}</p>
+  </div>
+</article>
+        {% endfor %}
+{% endblock content%}
