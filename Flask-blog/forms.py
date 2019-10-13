@@ -7,7 +7,7 @@ class RegisterationForm(FlaskForm):
     # datarequired - field cannot be empty.
     # Length - Length of username should be in between 2 to 20 characters.
 
-    email = StringField('Username', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), equal_to('password')])
     submit = SubmitField('Sign up')
