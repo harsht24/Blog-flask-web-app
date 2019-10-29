@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, Length, Email, equal_to, Validation
 from app.model import User
 
 
-
 class RegisterationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     # datarequired - field cannot be empty.
@@ -16,9 +15,9 @@ class RegisterationForm(FlaskForm):
     submit = SubmitField('Sign up')
 
     def validate_username(self, username):
-            user = User.query.filter_by(username=username.data).first()
-            if user:
-                raise ValidationError('That username is taken. Please choose another one. ')
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose another one. ')
 
 
 class LoginForm(FlaskForm):
