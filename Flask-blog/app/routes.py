@@ -61,12 +61,15 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html',title='Account')
+    image_file = url_for('static',filename='profile_pic/' + current_user.image_profile)
+    return render_template('account.html', title='Account', image_file=image_file)
