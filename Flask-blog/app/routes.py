@@ -7,26 +7,12 @@ import secrets
 import os
 from PIL import Image
 
-posts = [
-    {
-        'author': 'Harsh Tamkiya',
-        'title': 'Blog post 1',
-        'content': 'Data science',
-        'date_posted': 'Oct 10, 2019'
-    },
-    {
-        'author': 'Eden Hazard',
-        'title': 'Blog post 2',
-        'content': 'New start at Madrid',
-        'date_posted': 'Oct 11, 2019'
-    }
-]
-
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', posts=posts, title='Home')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 
 @app.route('/about')
@@ -106,11 +92,14 @@ def account():
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 
-@app.route('/post/new',method=['GET', 'POST'])
+@app.route('/post/new', methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        flash('Your post has been created!','success')
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    render_template('create_post.html', title='New Post', form=form)
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
