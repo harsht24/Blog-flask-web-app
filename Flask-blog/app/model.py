@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
-    def verify_serial_token(token):
+    def verify_reset_token(token):
         s = serializer(app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']
